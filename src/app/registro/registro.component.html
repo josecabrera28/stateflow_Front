@@ -1,0 +1,38 @@
+<form class="row g-3 was-validated my-5 mx-auto" #registroForm = "ngForm" (ngSubmit)="registrar(registroForm)">
+    <img src="../../assets/logo-png.png" alt="Flow State Logo" >
+    <div class="col-12">
+        <label for="validationServer01" class="form-label">Nombres</label>
+        <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control is-valid" id="validationServer01" required>
+    </div>
+    <div class="col-12">
+        <label for="validationServer02" class="form-label">Apellidos</label>
+        <input type="text" name="apellido" [(ngModel)]="apellido" class="form-control is-valid" id="validationServer02" required>
+    </div>
+    <div class="col-12">
+        <label for="validationServer02" class="form-label">Edad</label>
+        <input type="text" name="edad" [(ngModel)]="edad" class="form-control is-valid" id="validationServer02" required>
+    </div>
+    <div class="col-12">
+        <label for="validationServerUsername" class="form-label">Correo Electronico</label>
+        <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+            <input type="email" name="email" [(ngModel)]="email" class="form-control " id="validationServerUsername"
+                aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div class="invalid-tooltip">
+                    Please enter a valid email address.
+                </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <label for="validationServer02" class="form-label">Contraseña</label>
+        <div class="input-group has-validation">
+            <input type="password" name="password" [(ngModel)]="password" class="form-control" id="validationTooltipPassword" aria-describedby="validationTooltipPasswordPrepend" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,20}$">
+            <div class="invalid-tooltip">
+                Contraseña debe tener entre 10 y 20 caracteres y debe incluir al menos 1 letra y 1 numero.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
+</form>

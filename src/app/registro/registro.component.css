@@ -1,0 +1,13 @@
+form{
+    max-width: 400px;
+}
+img{
+    max-width: 150px;
+    margin: auto;
+}
+button{
+    margin-top: 35px;
+}
+form > div {
+    margin-bottom: 2%;
+}

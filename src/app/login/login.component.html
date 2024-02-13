@@ -1,0 +1,20 @@
+<main class="form-signin w-100 m-auto bg-success bg-opacity-25">
+  <form #loginForm = "ngForm" (ngSubmit)="login(loginForm)">
+    <img class="mb-4" src="../../assets/logo-png.png" alt="StateFlow App logo" width="132" height="117">
+    <h1 class="h3 mb-3 fw-normal">Iniciar Sesion</h1>
+    <div class="form-floating">
+      <input type="email" name="email" [(ngModel)]="user.email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+      <label for="floatingInput">Correo Electronico</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password" [(ngModel)]="user.password" class="form-control" id="floatingPassword" placeholder="Password" required>
+      <label for="floatingPassword">Contraseña</label>
+    </div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
+    <p class="pt-2">
+      No tienes una cuenta? Registrate
+      <a href="/registro">Aqui</a>
+    </p>
+    <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
+  </form>
+</main>
