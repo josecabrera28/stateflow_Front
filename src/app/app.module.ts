@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { RegistroComponent } from './registro/registro.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -17,7 +19,9 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    SidebarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

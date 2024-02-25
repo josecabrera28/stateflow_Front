@@ -37,35 +37,38 @@ export class RegistroComponent {
       console.log(usuario);
       this._auth.registrarUsuario(usuario).subscribe(
         response=>{
-          try {
-            if(response.message){
-              iziToast.show({
-                titleColor: '#FF0000',
-                title: 'ERROR',
-                clas: 'text-danger',
-                position: 'topRight',
-                message: response.message
-              });  
-            }
-            if(response.token){
-              console.log(response);
-              this._router.navigate(['login']);
-            }
-              
-          } catch (error) {
+          if(response.message){
             iziToast.show({
-              titleColor: '#FF0000',
-              title: 'ERROR',
-              clas: 'text-danger',
+              titleColor: 'black',
+              backgroundColor: '#FF0000',
+              color: 'red',
+              title: 'Error',
               position: 'topRight',
-              message: response.message
-            });
+              message: response.message,
+              theme: 'light', 
+              iconColor: 'white', 
+              layout: 1,
+            });  
+          }
+          if(response.token){
+            iziToast.show({
+              titleColor: 'black',
+              backgroundColor: 'green',
+              title: 'Éxito',
+              position: 'topRight',
+              message: 'Se ha creado su cuenta',
+              theme: 'light', 
+              color: 'green', 
+              iconColor: 'white', 
+              layout: 1,
+            });  
+            this._router.navigate(['login']);
           }
         },error=>{
           iziToast.show({
             titleColor: '#FF0000',
             title: 'ERROR',
-            clas: 'text-danger',
+            class: 'text-danger',
             position: 'topRight',
             message: error.message
           });
