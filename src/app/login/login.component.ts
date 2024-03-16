@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import iziToast from 'izitoast';
 
-declare var iziToast: any;
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit{
 
   login(loginForm: { valid: any; }){
     if(loginForm.valid){
-      console.log(this.user);
 
       let data = {
         email: this.user.email,
@@ -39,7 +38,7 @@ export class LoginComponent implements OnInit{
             iziToast.show({
               titleColor: '#FF0000',
               title: 'ERROR',
-              clas: 'text-danger',
+              class: 'text-danger',
               position: 'topRight',
               message: response.message
             });  
@@ -53,7 +52,7 @@ export class LoginComponent implements OnInit{
           iziToast.show({
             titleColor: '#FF0000',
             title: 'ERROR',
-            clas: 'text-danger',
+            class: 'text-danger',
             position: 'topRight',
             message: error.message
           });
@@ -63,7 +62,7 @@ export class LoginComponent implements OnInit{
       iziToast.show({
         titleColor: '#FF0000',
         title: 'ERROR',
-        clas: 'text-danger',
+        class: 'text-danger',
         position: 'topRight',
         message: 'los datos del formulario no son validos'
       });

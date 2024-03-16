@@ -1,0 +1,504 @@
+<!--boton crear propiedad-->
+<div class="d-grid gap-2 d-md-flex mt-3 justify-content-md-end">
+    <button id="crearPropiedadBtn" class="btn btn-outline-success btn-sm me-md-2" type="button" data-bs-toggle="modal"
+        data-bs-target="#nuevaPropiedad">Crear Nueva Propiedad</button>
+</div>
+<!--tabla de contenido-->
+<div class="container-fluid text-center">
+    <div class="table-responsive">
+        <table class="table mt-4 table-success align-middle table-striped table-hover table-sm border-primary opacity-75">
+            <thead>
+                <tr>
+                    <th hidden>Propiedad ID</th>
+                    <th># Identificador</th>
+                    <th>Casa/Apartamento</th>
+                    <th>Ubicacion</th>
+                    <th>m2</th>
+                    <th>Arriendos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <ng-container *ngFor="let propiedad of propiedades; let i = index">
+                    <tr>
+                        <td hidden>{{ propiedad?._id }}</td>
+                        <td>{{ truncateLastFourDigits(propiedad?._id) }}</td>
+                        <td>{{ propiedad?.tipo }}</td>
+                        <td>{{ propiedad?.ubicacion }}</td>
+                        <td>{{ propiedad?.m2 }}</td>
+                        <td>{{ propiedad?.ingresos?.arriendos?.length }}</td>
+                        <td>
+                            <!--boton ver propiedad-->
+                            <button id="adminPropiedadBtn" (click)="adminPropiedad(propiedad)"
+                                class="btn btn-warning btn-sm w-50 me-1 my-1" data-bs-toggle="modal"
+                                data-bs-target="#adminPropiedad" type="button">Administrar</button>
+                            <!--boton eliminar propiedad-->
+                            <button class="btn btn-dark btn-sm w-50" (click)="eliminarPropiedad(propiedad?._id)"
+                                type="button">Eliminar</button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Modal para crear nueva propiedad-->
+<div class="modal" tabindex="-1" id="nuevaPropiedad">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Propiedad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center text-center">
+                    <div class=" p-3 w-100">
+                        <form #dataPropiedad="ngForm" (ngSubmit)="nuevaPropiedad(dataPropiedad)">
+                            <div class="row mb-3">
+                                <label for="tipo" class="col-sm-4 col-form-label">Tipo</label>
+                                <div class="col-sm-8">
+                                    <select name="tipo" [(ngModel)]="tipo" class="form-select" aria-label="Tipo"
+                                        required>
+                                        <option value="casa">Casa</option>
+                                        <option value="apartamento">Apartamento</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="ubicacion" class="col-sm-4 col-form-label">Ubicación</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="ubicacion" [(ngModel)]="ubicacion"
+                                        class="form-control is-valid" id="ubicacion" placeholder="Ubicación" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="m2" class="col-sm-4 col-form-label">m2</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="m2" [(ngModel)]="m2" class="form-control is-valid" id="m2"
+                                        placeholder="m2" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label">Cuartos</label>
+                                <div class="col-sm-8">
+                                    <select name="cuartos" [(ngModel)]="cuartos" class="form-select"
+                                        aria-label="Cuartos" required>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label">Parqueaderos</label>
+                                <div class="col-sm-8">
+                                    <select name="parqueaderos" [(ngModel)]="parqueaderos" class="form-select"
+                                        aria-label="Parqueaderos" required>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Crear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal para crear administrar propiedad-->
+<div class="modal" tabindex="-1" id="adminPropiedad">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Administrar Propiedad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center text-center">
+                    <div class=" p-3 w-100">
+                        <div class="card mb-3" style="max-width: auto;">
+                            <div class="row align-items-center g-0">
+                                <div *ngIf="tipo_i=='casa'" class="col-md-2">
+                                    <i class="fa-solid fa-house fa-5x mx-2"></i>
+                                </div>
+                                <div *ngIf="tipo_i=='apartamento'" class="col-md-2">
+                                    <i class="fa-solid fa-building fa-5x"></i>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="card-body">
+                                        <div class="card text-center">
+                                            <div class="card-header">
+                                                <ul class="nav nav-tabs card-header-tabs" id="myTabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" [class.active]="isTabActive('info')"
+                                                            aria-current="true" (click)="showTab('info', $event)"
+                                                            href="#">Informacion</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link " [class.active]="isTabActive('ie')"
+                                                            (click)="showTab('ie', $event)" href="#">I/E</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" [class.active]="isTabActive('valores')"
+                                                            (click)="showTab('valores', $event)" href="#">Valor
+                                                            Arriendos</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link"
+                                                            [class.active]="isTabActive('arrendatarios')"
+                                                            (click)="showTab('arrendatarios', $event)"
+                                                            href="#">Arrendatarios</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-body">
+                                                <div [ngSwitch]="currentTab">
+                                                    <div *ngSwitchCase="'info'">
+                                                        <!--Contenido de pestaña de informacion general-->
+                                                        <form>
+                                                            <div class="row mb-3">
+                                                                <label for="_id" class="col-sm-4 col-form-label"
+                                                                    hidden>ID</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text" id="_id"
+                                                                        placeholder="Disabled input" aria-label="ID"
+                                                                        hidden disabled readonly [(ngModel)]="_id_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="tipo"
+                                                                    class="col-sm-4 col-form-label">Tipo</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text" id="tipo"
+                                                                        placeholder="Disabled input" aria-label="Tipo"
+                                                                        disabled readonly [(ngModel)]="tipo_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="ubicacion"
+                                                                    class="col-sm-4 col-form-label">Ubicación</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text"
+                                                                        id="ubicacion" placeholder="Disabled input"
+                                                                        aria-label="Ubicación" disabled readonly
+                                                                        [(ngModel)]="ubicacion_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="m2"
+                                                                    class="col-sm-4 col-form-label">M2</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text" id="m2"
+                                                                        placeholder="Disabled input" aria-label="M2"
+                                                                        disabled readonly [(ngModel)]="m2_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="cuartos"
+                                                                    class="col-sm-4 col-form-label">Cuartos</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text" id="cuartos"
+                                                                        placeholder="Disabled input"
+                                                                        aria-label="Cuartos" disabled readonly
+                                                                        [(ngModel)]="cuartos_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="parqueaderos"
+                                                                    class="col-sm-4 col-form-label">Parqueaderos</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="form-control" type="text"
+                                                                        id="parqueaderos" placeholder="Disabled input"
+                                                                        aria-label="Parqueaderos" disabled readonly
+                                                                        [(ngModel)]="parqueaderos_i"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div *ngSwitchCase="'ie'">
+                                                        <!-- Contenido de la pestaña I/E -->
+                                                        <div class="container text-center">
+                                                            <div
+                                                                class="row justify-content-md-center align-items-center">
+                                                                <div class="col col-lg-3">
+                                                                    <select
+                                                                        class="form-select form-select-sm my-5 servicios"
+                                                                        aria-label="Small select example"
+                                                                        [(ngModel)]="ano" id="ano">
+                                                                        <option selected>Año</option>
+                                                                        <option value=2020>2020</option>
+                                                                        <option value=2021>2021</option>
+                                                                        <option value=2022>2022</option>
+                                                                        <option value=2023>2023</option>
+                                                                        <option value=2024>2024</option>
+                                                                        <option value=2025>2025</option>
+                                                                        <option value=2026>2026</option>
+                                                                        <option value=2027>2027</option>
+                                                                        <option value=2028>2028</option>
+                                                                        <option value=2029>2029</option>
+                                                                        <option value=2030>2030</option>
+                                                                        <option value=2031>2031</option>
+                                                                        <option value=2032>2032</option>
+                                                                        <option value=2033>2033</option>
+                                                                        <option value=2034>2034</option>
+                                                                        <option value=2035>2035</option>
+                                                                        <option value=2036>2036</option>
+                                                                        <option value=2037>2037</option>
+                                                                        <option value=2038>2038</option>
+                                                                        <option value=2039>2039</option>
+                                                                        <option value=2040>2040</option>
+                                                                    </select>
+                                                                    <select
+                                                                        class="form-select form-select-sm my-5 servicios"
+                                                                        aria-label="Small select example"
+                                                                        [(ngModel)]="mes" id="mes">
+                                                                        <option selected>Mes</option>
+                                                                        <option value=1>Enero</option>
+                                                                        <option value=2>Febrero</option>
+                                                                        <option value=3>Marzo</option>
+                                                                        <option value=4>Abril</option>
+                                                                        <option value=5>Mayo</option>
+                                                                        <option value=6>Junio</option>
+                                                                        <option value=7>Julio</option>
+                                                                        <option value=8>Agosto</option>
+                                                                        <option value=9>Septiembre</option>
+                                                                        <option value=10>Octubre</option>
+                                                                        <option value=11>Noviembre</option>
+                                                                        <option value=12>Diciembre</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-auto border-start">
+                                                                    <form #dataPropiedad="ngForm"
+                                                                        (ngSubmit)="nuevaPropiedad(dataPropiedad)">
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Agua"
+                                                                                class="col-sm-6 col-form-label">Agua</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number"
+                                                                                    name="servicio_Agua"
+                                                                                    [(ngModel)]="servicio_Agua"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Agua"
+                                                                                    placeholder="$0.0" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Energia"
+                                                                                class="col-sm-6 col-form-label">Energia</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number"
+                                                                                    name="servicio_Energia"
+                                                                                    [(ngModel)]="servicio_Energia"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Energia"
+                                                                                    placeholder="$0.0" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Gas"
+                                                                                class="col-sm-6 col-form-label">Gas</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number" name="servicio_Gas"
+                                                                                    [(ngModel)]="servicio_Gas"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Gas" placeholder="$0.0"
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Internet"
+                                                                                class="col-sm-6 col-form-label">Internet</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number"
+                                                                                    name="servicio_Internet"
+                                                                                    [(ngModel)]="servicio_Internet"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Internet"
+                                                                                    placeholder="$0.0" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Administracion"
+                                                                                class="col-sm-6 col-form-label">Administracion</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number"
+                                                                                    name="servicio_Administracion"
+                                                                                    [(ngModel)]="servicio_Administracion"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Administracion"
+                                                                                    placeholder="$0.0" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-3">
+                                                                            <label for="servicio_Credito"
+                                                                                class="col-sm-6 col-form-label">Cuota
+                                                                                Credito</label>
+                                                                            <div class="col-sm-6">
+                                                                                <input type="number"
+                                                                                    name="servicio_Credito"
+                                                                                    [(ngModel)]="servicio_Credito"
+                                                                                    class="form-control is-valid servicios"
+                                                                                    id="servicio_Credito"
+                                                                                    placeholder="$0.0" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row">
+                                                                <button class="btn btn-primary"
+                                                                    (click)="ingresarRegistro()">Ingresar
+                                                                    Registro</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngSwitchCase="'valores'">
+                                                        <!-- Contenido de la pestaña Valor Arriendos -->
+                                                        <table class="table table-striped align-middle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col" hidden>id</th>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Tipo</th>
+                                                                    <th scope="col" style="min-width: 7rem;">
+                                                                        Valor
+                                                                        Actual</th>
+                                                                    <th scope="col">Actualizar valor</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="table-group-divider">
+                                                                <tr class="identificador"
+                                                                    *ngFor="let arriendo of arriendos; let i= index">
+                                                                    <td hidden>{{ arriendo.arriendoId._id }}
+                                                                    </td>
+                                                                    <th scope="row">{{ i + 1 }}</th>
+                                                                    <td>{{ arriendo.tipo }}</td>
+                                                                    <td class="precioActual"><strong>$</strong>
+                                                                        {{
+                                                                        arriendo.arriendoId.precio }}</td>
+                                                                    <td>
+                                                                        <div class="row justify-content-center">
+                                                                            <input type="number" class="nuevoPrecio"
+                                                                                placeholder="$0.0"
+                                                                                (input)="deshabilitarBotones(i)"
+                                                                                style="max-width: 40%;">
+                                                                            <div class="d-grid gap-2"
+                                                                                style="max-width: 40%;">
+                                                                                <button class="btn btn-primary"
+                                                                                    (click)="actualizarPrecio(i,arriendo.arriendoId._id)">Actualizar</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div *ngSwitchCase="'arrendatarios'" class="row">
+                                                        <!-- Contenido de la pestaña Arrendatarios -->
+                                                        <div class="col-md-6">
+                                                            <select class="form-select" id="selectArriendos"
+                                                                [(ngModel)]="selectedArriendo"
+                                                                (ngModelChange)="onArriendoChange(selectedArriendo)">
+                                                                <option *ngFor="let arriendo of arriendos"
+                                                                    [ngValue]="arriendo">{{ arriendo.tipo }}</option>
+                                                            </select>
+                                                            <div class="mt-3">
+                                                                <label for="precioArriendo"
+                                                                    class="form-label">Precio:</label>
+                                                                <p id="precioArriendo"><strong>$ {{
+                                                                    selectedArriendo?.arriendoId?.precio || '0.0' }}</strong></p>
+                                                                <label for="arrendado"
+                                                                    class="form-label">Arrendado?</label>
+                                                                <p id="arrendado">{{
+                                                                    selectedArriendo?.arriendoId?.arrendado === true ?
+                                                                    'Sí' : 'No' }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Formulario para remover arrendatario -->
+                                                        <div class="col-md-6" *ngIf="selectedArriendo?.arriendoId?.arrendado">
+                                                            <div class="card text-center mb-3">
+                                                                <div class="card-body">
+                                                                    <h3 class="card-title text-warning">Arrendatario</h3>
+                                                                    <!-- informacion del arrendatario -->
+                                                                    <ul class="list-group list-group-flush">
+                                                                        <li class="list-group-item"><strong>Nombre: </strong>{{
+                                                                            selectedArriendo.arriendoId.arrendatario ? selectedArriendo.arriendoId.arrendatario.nombre : ''
+                                                                            }}</li>
+                                                                        <li class="list-group-item"><strong>Apellido: </strong>{{
+                                                                            selectedArriendo.arriendoId.arrendatario ? selectedArriendo.arriendoId.arrendatario.apellido : ''
+                                                                            }}</li>
+                                                                        <li class="list-group-item"><strong>Edad: </strong>{{
+                                                                            selectedArriendo.arriendoId.arrendatario ? selectedArriendo.arriendoId.arrendatario.edad : ''
+                                                                            }} años</li>
+                                                                    </ul>
+                                                                    <a href="#" (click)="removerArrendatario(selectedArriendo)" class="btn btn-danger">Remover
+                                                                        Arrendatario</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Formulario para agregar arrendatario -->
+                                                        <div class="col-md-6" *ngIf="selectedArriendo?.arriendoId?.arrendado === false">
+                                                            <form (submit)="agregarArrendatario(selectedArriendo)">
+                                                                <div class="input-group mb-3">
+                                                                    <span style="min-width: 7rem;" class="input-group-text">Nombre: </span>
+                                                                    <input type="text" class="form-control" id="nombre" [(ngModel)]="nuevoArrendatario.nombre" name="nombre" required>
+                                                                </div>
+                                                                <div class="input-group mb-3">
+                                                                    <span style="min-width: 7rem;" class="input-group-text">Apellido: </span>
+                                                                    <input type="text" class="form-control" id="apellido" [(ngModel)]="nuevoArrendatario.apellido"  name="apellido" required>
+                                                                </div>
+                                                                <div class="input-group mb-3">
+                                                                    <span style="min-width: 7rem;" class="input-group-text">Edad: </span>
+                                                                    <input type="number" class="form-control" id="edad" [(ngModel)]="nuevoArrendatario.edad"  name="edad" required>
+                                                                </div>
+                                                                <div class="input-group mb-3">
+                                                                    <span style="min-width: 7rem;" class="input-group-text">Email: </span>
+                                                                    <input type="email" class="form-control" id="email" [(ngModel)]="nuevoArrendatario.email" name="email" required>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-success">Agregar Arrendatario</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

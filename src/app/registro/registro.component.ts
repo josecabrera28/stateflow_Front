@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
-
-declare var iziToast: any;
+import iziToast from 'izitoast';
 
 @Component({
   selector: 'app-registro',
@@ -34,7 +33,6 @@ export class RegistroComponent {
         email: this.email,
         contraseña: this.password
       }
-      console.log(usuario);
       this._auth.registrarUsuario(usuario).subscribe(
         response=>{
           if(response.message){
@@ -78,7 +76,7 @@ export class RegistroComponent {
       iziToast.show({
         titleColor: '#FF0000',
         title: 'ERROR',
-        clas: 'text-danger',
+        class: 'text-danger',
         position: 'topRight',
         message: 'Formulario no valido'
       });

@@ -1,0 +1,45 @@
+<div class="d-flex flex-column flex-shrink-0 p-1 text-bg-dark" style="height: 95vh;">
+    <a href="/"
+        class="d-flex justify-content-around align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <i class="fa-solid fa-user-astronaut mx-3"></i>
+        <span class="fs-4">Tablero Administrador</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link active" aria-current="page">
+                <i class="fa-regular fa-building me-2"></i>
+                Propiedades
+            </a>
+        </li>
+        <li>
+            <a href="/reportes" class="nav-link text-white">
+                <i class="fa-solid fa-chart-line me-2"></i>
+                Reportes
+            </a>
+        </li>
+        <li>
+            <a href="/contratos" class="nav-link text-white">
+                <i class="fa-regular fa-file me-2"></i>
+                Contratos de Arrendamiento
+            </a>
+        </li>
+        <li>
+            <a href="#" (click)="logout()" class="nav-link text-white">
+                <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                Cerrar Sesion
+            </a>
+        </li>
+    </ul>
+    <div class="dropdown mt-auto mb-4">
+        <hr>
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="icono de perfil" width="32" height="32" class="rounded-circle me-2">
+            <strong>Opciones</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar Sesion</a></li>
+        </ul>
+    </div>
+</div>
