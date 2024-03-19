@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import iziToast from 'izitoast';
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -377,7 +379,7 @@ export class DisplayPropertiesComponent {
             }
           },
           (error) => {
-            if(error.error.errors){
+            if (error.error.errors) {
               for (const item of error.error.errors) {
                 iziToast.show({
                   titleColor: '#FF0000',
@@ -387,7 +389,7 @@ export class DisplayPropertiesComponent {
                   message: item.path + '-' + item.message,
                 });
               }
-            }else if(error.error){
+            } else if (error.error) {
               iziToast.show({
                 titleColor: '#FF0000',
                 title: 'ERROR',
@@ -395,7 +397,7 @@ export class DisplayPropertiesComponent {
                 position: 'topRight',
                 message: error.error.error,
               });
-            }else{
+            } else {
               iziToast.show({
                 titleColor: '#FF0000',
                 title: 'ERROR',
@@ -404,7 +406,7 @@ export class DisplayPropertiesComponent {
                 message: error.message,
               });
             }
-            
+
             this.ano = 0;
             this.mes = 0;
             this.servicio_Agua = 0;
@@ -444,7 +446,8 @@ export class DisplayPropertiesComponent {
         edad: parseInt(this.nuevoArrendatario.edad),
         email: this.nuevoArrendatario.email,
       };
-      if(this.nuevoArrendatario.nombre == undefined ||
+      if (
+        this.nuevoArrendatario.nombre == undefined ||
         this.nuevoArrendatario.nombre == null ||
         this.nuevoArrendatario.apellido == undefined ||
         this.nuevoArrendatario.apellido == null ||
@@ -453,27 +456,46 @@ export class DisplayPropertiesComponent {
         this.nuevoArrendatario.edad <= 0 ||
         this.nuevoArrendatario.email == undefined ||
         this.nuevoArrendatario.email == null
-        ){
-          iziToast.show({
-            titleColor: '#FF0000',
-            title: 'ERROR',
-            class: 'text-danger',
-            position: 'topRight',
-            message: 'diligencia el formulario completamente',
-          });
-          this.nuevoArrendatario={};
-          return;
-        }
-      console.log(this);
+      ) {
+        iziToast.show({
+          titleColor: '#FF0000',
+          title: 'ERROR',
+          class: 'text-danger',
+          position: 'topRight',
+          message: 'diligencia el formulario completamente',
+        });
+        this.nuevoArrendatario = {};
+        return;
+      }
       //Envia peticion y maneja la respuesta
       this._httpClient
         .put(
-          this.url + `propiedades/adicionararrendatario/${this._id_i}/${selectedArriendo.arriendoId._id}`,
+          this.url +
+            `propiedades/adicionararrendatario/${this._id_i}/${selectedArriendo.arriendoId._id}`,
           body,
-          { headers: headers }
+          { headers: headers, responseType: 'blob' as 'json' }
         )
+        // Maneja errores de la petición HTTP
         .subscribe(
-          (response) => {
+          (response: any) => {
+            // Crea un objeto Blob con los datos recibidos del servidor
+            const blob = new Blob([response], { type: 'application/pdf' });
+
+            // Crea un objeto URL para el Blob
+            const url = window.URL.createObjectURL(blob);
+
+            // Crea un enlace <a> para descargar el PDF
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'contrato.pdf'; // Nombre del archivo PDF
+            document.body.appendChild(link);
+
+            // Simula el clic en el enlace para iniciar la descarga
+            link.click();
+
+            // Libera el objeto URL una vez que se ha iniciado la descarga
+            window.URL.revokeObjectURL(url);
+            
             iziToast.show({
               titleColor: '#46bd22cc',
               title: 'Exito',
@@ -484,7 +506,7 @@ export class DisplayPropertiesComponent {
             //Actualiza la informacion de las propiedades
             this.ngOnInit();
             //limpia el formulario
-            this.nuevoArrendatario={};
+            this.nuevoArrendatario = {};
           },
           (error) => {
             iziToast.show({
@@ -502,7 +524,7 @@ export class DisplayPropertiesComponent {
               message: error.error.error,
             });
             console.error('Error en la solicitud:', error);
-            this.nuevoArrendatario={};
+            this.nuevoArrendatario = {};
           }
         );
     } else {
@@ -524,7 +546,9 @@ export class DisplayPropertiesComponent {
       //Envia peticion y maneja la respuesta
       this._httpClient
         .put(
-          this.url + `propiedades/removerarrendatario/${this._id_i}/${selectedArriendo.arriendoId._id}`,{},
+          this.url +
+            `propiedades/removerarrendatario/${this._id_i}/${selectedArriendo.arriendoId._id}`,
+          {},
           { headers: headers }
         )
         .subscribe(
@@ -539,7 +563,7 @@ export class DisplayPropertiesComponent {
             //Actualiza la informacion de las propiedades
             this.ngOnInit();
             //limpia el formulario
-            this.nuevoArrendatario={};
+            this.nuevoArrendatario = {};
           },
           (error) => {
             iziToast.show({
@@ -550,7 +574,7 @@ export class DisplayPropertiesComponent {
               message: error.message,
             });
             console.error('Error en la solicitud:', error);
-            this.nuevoArrendatario={};
+            this.nuevoArrendatario = {};
           }
         );
     } else {
