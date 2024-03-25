@@ -9,6 +9,10 @@ export class SidebarComponent {
   constructor(private router: Router ){
   }
 
+  isActive(url: string): boolean {
+    return this.router.isActive(url, true);
+  }
+
   logout(){
     try {
       sessionStorage.clear();

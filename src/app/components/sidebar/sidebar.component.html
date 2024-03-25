@@ -7,19 +7,19 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/" class="nav-link active" aria-current="page">
+            <a href="/home" [class.active]="isActive('/home')" class="nav-link text-white" aria-current="page">
                 <i class="fa-regular fa-building me-2"></i>
                 Propiedades
             </a>
         </li>
         <li>
-            <a href="/reportes" class="nav-link text-white">
+            <a href="/reportes" [class.active]="isActive('/reportes')" class="nav-link text-white">
                 <i class="fa-solid fa-chart-line me-2"></i>
                 Reportes
             </a>
         </li>
         <li>
-            <a href="/contratos" class="nav-link text-white">
+            <a href="/contratos" [class.active]="isActive('/contratos')" class="nav-link text-white">
                 <i class="fa-regular fa-file me-2"></i>
                 Contratos de Arrendamiento
             </a>
