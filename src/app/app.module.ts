@@ -12,6 +12,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DisplayPropertiesComponent } from './components/display-properties/display-properties.component';
+import { ReportesComponent } from './reportes/reportes.component';
+import { ContratosComponent } from './contratos/contratos.component';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -25,7 +27,9 @@ export function tokenGetter() {
     SidebarComponent,
     FooterComponent,
     HeaderComponent,
-    DisplayPropertiesComponent
+    DisplayPropertiesComponent,
+    ReportesComponent,
+    ContratosComponent,
   ],
   imports: [
     BrowserModule,
