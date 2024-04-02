@@ -2,8 +2,36 @@
     <app-header></app-header>
     <div id="content" class="container-fluid p-0">
         <div class="row">
-            <app-sidebar class="col-md-3 col-lg-2"></app-sidebar>  
-            <p class="col-md-9 col-lg-10">reportes works</p>
+            <app-sidebar class="col-md-3 col-lg-2"></app-sidebar>
+            <div class="col-md-9 col-lg-10 my-3">
+                <div class="container mx-3">
+                    <div class="row justify-content-between">
+                        <div class="col-4">
+                            <select id="selectPropiedad" class="form-select form-select mb-3"
+                                aria-label="Large select example" (change)="actualizarPropiedadSeleccionado()">
+                                <option *ngFor="let propiedad of propiedades">{{
+                                    propiedad.ubicacion }}</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <select id="selectPropiedad" class="form-select form-select mb-3"
+                                aria-label="Large select example" [(ngModel)]="anoSeleccionado">
+                                <option *ngFor="let ano of anos">{{ ano }}</option>
+                            </select>
+                        </div>
+                        <button type="button" (click)="generarReportes()" class="btn btn-warning col-2 mx-3">
+                            Generar Reporte</button>
+                    </div>
+                </div>
+                <hr>
+                <div id="content" class="container-fluid p-0">
+                    <!-- Otras partes de tu plantilla -->
+                    <div class="col-md-9 col-lg-10 my-3">
+                        <!-- Otras partes de tu plantilla -->
+                        <div id="grafico-barras"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
