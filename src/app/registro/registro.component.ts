@@ -68,7 +68,7 @@ export class RegistroComponent {
             title: 'ERROR',
             class: 'text-danger',
             position: 'topRight',
-            message: error.message
+            message: error.error.message
           });
         }
       );

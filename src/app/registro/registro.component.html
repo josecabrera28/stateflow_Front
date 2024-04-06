@@ -4,28 +4,28 @@
             <img src="../../assets/logo-png.png" alt="Flow State Logo" class="mb-3">
             <h1 class="h3 mb-3 fw-normal">Crear Cuenta</h1>
             <div class="col-12">
-                <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control is-valid" id="validationServer01" placeholder="Nombres" required>
+                <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" id="nombres" placeholder="Nombres" required>
             </div>
             <div class="col-12">
-                <input type="text" name="apellido" [(ngModel)]="apellido" class="form-control is-valid" id="validationServer02" placeholder="Apellidos" required>
+                <input type="text" name="apellido" [(ngModel)]="apellido" class="form-control" id="apellidos" placeholder="Apellidos" required>
             </div>
             <div class="col-12">
-                <input type="text" name="edad" [(ngModel)]="edad" class="form-control is-valid" id="validationServer02" required placeholder="Edad">
+                <input type="number" name="edad" [(ngModel)]="edad" class="form-control" id="edad" required placeholder="Edad">
             </div>
             <div class="col-12">
-                <div class="input-group has-validation">
+                <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                    <input type="email" name="email" [(ngModel)]="email" class="form-control " id="validationServerUsername"
+                    <input type="email" #emailInput="ngModel" name="email" [(ngModel)]="email" class="form-control" id="validationServerUsername"
                         aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Correo Electronico">
-                        <div class="invalid-tooltip">
+                        <div *ngIf="emailInput.invalid" style="display: inline;" class="invalid-tooltip">
                             Por favor ingrese un Correo electronico valido.
                         </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="input-group has-validation">
-                    <input type="password" name="password" [(ngModel)]="password" class="form-control" id="validationTooltipPassword" aria-describedby="validationTooltipPasswordPrepend" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,20}$" placeholder="Contraseña">
-                    <div class="invalid-tooltip">
+                    <input type="password" #passwordInput="ngModel" name="password" [(ngModel)]="password" class="form-control" id="validationTooltipPassword" aria-describedby="validationTooltipPasswordPrepend" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,20}$" placeholder="Contraseña">
+                    <div *ngIf="passwordInput.invalid" style="display: inline;" class="invalid-tooltip">
                         Contraseña debe tener entre 10 y 20 caracteres y debe incluir al menos 1 letra y 1 numero.
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                 Ya tienes una cuenta? Inicia Sesion
                 <a href="/login">Aqui</a>
             </p>
-            <p class="mt-5 mb-3 text-body-secondary">&copy; State Flow. Developed by Jose Cabrera. All rights reserved. Since 2024. </p>
+            <p class="mt-5 mb-3 text-body-secondary">&copy; State Flow. <br> Developed by Jose Cabrera. All rights reserved.<br> Since 2024. </p>
         </form>
     </div>
 </main>

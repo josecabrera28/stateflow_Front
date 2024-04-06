@@ -478,6 +478,7 @@ export class DisplayPropertiesComponent {
         // Maneja errores de la petición HTTP
         .subscribe(
           (response: any) => {
+            
             // Crea un objeto Blob con los datos recibidos del servidor
             const blob = new Blob([response], { type: 'application/pdf' });
 
@@ -491,7 +492,7 @@ export class DisplayPropertiesComponent {
             document.body.appendChild(link);
 
             // Simula el clic en el enlace para iniciar la descarga
-            link.click();
+            //link.click();
 
             // Libera el objeto URL una vez que se ha iniciado la descarga
             window.URL.revokeObjectURL(url);
