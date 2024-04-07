@@ -54,11 +54,33 @@ export class ContratosComponent {
             console.log(this.propiedades);
           },
           (error) => {
-            console.error('Error en la solicitud:', error);
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message
+              });  
+            }
           }
         );
     } else {
-      console.error('Token no disponible. Usuario no autenticado.');
+      iziToast.show({
+        titleColor: '#FF0000',
+        title: 'ERROR',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Token no disponible. Usuario no autenticado.'
+      });
     }
   }
 
@@ -88,11 +110,26 @@ export class ContratosComponent {
                 this.contratos.push(fileName);
               }
             });     
-            console.log('Contratos encontrados:', this.contratos);
-            console.log('Contratos encontrados:', this.contratosRutas);
           },
           (error) => {
-            console.error('Error en la solicitud:', error);
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message
+              });
+              console.error('Error en la solicitud:', error);
+            }
           }
         );
     }
@@ -158,11 +195,34 @@ export class ContratosComponent {
             });
           },
           (error) => {
-            console.error('Error al descargar contrato de S3:', error);
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message
+              });
+              console.error('Error al descargar contrato de S3:', error);
+            }
           }
         );
     } else {
-      console.error('Token no disponible. Usuario no autenticado.');
+      iziToast.show({
+        titleColor: '#FF0000',
+        title: 'ERROR',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Token no disponible. Usuario no autenticado.'
+      });
     }
   }
 }

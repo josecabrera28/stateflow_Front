@@ -24,13 +24,13 @@ export class AuthService {
   }
 
   isAuthenticate(allowedRoles: string[]){
-
+    console.log("entrando a authenticate");
     const token = sessionStorage.getItem('token');
     if(!token){
       return false;
     }
-    var decodedToken = this.jwtHelper.decodeToken(token); 
     try {
+      var decodedToken = this.jwtHelper.decodeToken(token); 
       if(!decodedToken){
         sessionStorage.removeItem('token');
         return false;

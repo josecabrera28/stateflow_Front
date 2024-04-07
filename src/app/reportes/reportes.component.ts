@@ -57,11 +57,34 @@ export class ReportesComponent {
             this.propiedadSeleccionada = this.propiedades[0];
           },
           (error) => {
-            console.error('Error en la solicitud:', error);
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message
+              });
+              console.error('Error en la solicitud:', error);
+            }
           }
         );
     } else {
-      console.error('Token no disponible. Usuario no autenticado.');
+      iziToast.show({
+        titleColor: '#FF0000',
+        title: 'ERROR',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Token no disponible. Usuario no autenticado.'
+      });
     }
     for (let index = 2020; index <= 2040; index++) {
       this.anos.push(index);
@@ -129,7 +152,7 @@ export class ReportesComponent {
     const datosMeses = meses.map((mes, i) => ({
         mes,
         ingreso: ingresos[i+1] || 0,
-        gasto: gastosUnificados[i] || 0
+        gasto: gastosUnificados[i+1] || 0
     }));
     console.log(datosMeses);
     // Calcular el valor máximo entre ingresos y gastos para ajustar el rango del eje y

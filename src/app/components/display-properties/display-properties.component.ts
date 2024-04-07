@@ -154,26 +154,42 @@ export class DisplayPropertiesComponent {
               this.ingresos = { arriendos: [] };
             },
             (error) => {
+              if(error.error.error){
+                iziToast.show({
+                  titleColor: '#FF0000',
+                  title: 'ERROR',
+                  class: 'text-danger',
+                  position: 'topRight',
+                  message: error.error.error
+                });  
+              }else{
+                iziToast.show({
+                  titleColor: '#FF0000',
+                  title: 'ERROR',
+                  class: 'text-danger',
+                  position: 'topRight',
+                  message: error.message,
+                });
+                console.error('Error en la solicitud:', error);  
+              }
               this.tipo = '';
               this.ubicacion = '';
               this.m2 = 0;
-              this.cuartos = 0;
+              this.cuartos = 1;
               this.parqueaderos = 0;
               this.gastos = [];
               this.ingresos = { arriendos: [] };
-              iziToast.show({
-                titleColor: '#FF0000',
-                title: 'ERROR',
-                class: 'text-danger',
-                position: 'topRight',
-                message: error.message,
-              });
-              console.error('Error en la solicitud:', error);
             }
           );
       }
     } else {
-      console.error('Token no disponible. Usuario no autenticado.');
+      iziToast.show({
+        titleColor: '#FF0000',
+        title: 'ERROR',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'No token. Usuario no autenticado.'
+      });  
     }
   }
 
@@ -201,14 +217,24 @@ export class DisplayPropertiesComponent {
               this.ngOnInit();
             },
             (error) => {
-              iziToast.show({
-                titleColor: '#FF0000',
-                title: 'ERROR',
-                class: 'text-danger',
-                position: 'topRight',
-                message: error.message,
-              });
-              console.error('Error en la solicitud:', error);
+              if(error.error.error){
+                iziToast.show({
+                  titleColor: '#FF0000',
+                  title: 'ERROR',
+                  class: 'text-danger',
+                  position: 'topRight',
+                  message: error.error.error
+                });  
+              } else{
+                iziToast.show({
+                  titleColor: '#FF0000',
+                  title: 'ERROR',
+                  class: 'text-danger',
+                  position: 'topRight',
+                  message: error.message,
+                });
+                console.error('Error en la solicitud:', error);
+              }
             }
           );
       }
@@ -277,7 +303,24 @@ export class DisplayPropertiesComponent {
             }
           },
           (error) => {
-            console.error('Error en la solicitud:', error);
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message
+              });  
+              console.error('Error en la solicitud:', error);
+            }
           }
         );
     } else {
@@ -567,15 +610,25 @@ export class DisplayPropertiesComponent {
             this.nuevoArrendatario = {};
           },
           (error) => {
-            iziToast.show({
-              titleColor: '#FF0000',
-              title: 'ERROR',
-              class: 'text-danger',
-              position: 'topRight',
-              message: error.message,
-            });
-            console.error('Error en la solicitud:', error);
-            this.nuevoArrendatario = {};
+            if(error.error.error){
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.error.error
+              });  
+            }else{
+              iziToast.show({
+                titleColor: '#FF0000',
+                title: 'ERROR',
+                class: 'text-danger',
+                position: 'topRight',
+                message: error.message,
+              });
+              console.error('Error en la solicitud:', error);
+              this.nuevoArrendatario = {};
+            }
           }
         );
     } else {
