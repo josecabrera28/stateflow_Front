@@ -51,13 +51,23 @@ export class LoginComponent implements OnInit{
             this._router.navigate(['/']);
           }
         },error=>{
-          iziToast.show({
-            titleColor: '#FF0000',
-            title: 'ERROR',
-            class: 'text-danger',
-            position: 'topRight',
-            message: error.message
-          });
+          if (error.name === 'TimeoutError') {
+            iziToast.show({
+              titleColor: '#FF0000',
+              title: 'ERROR',
+              class: 'text-danger',
+              position: 'topRight',
+              message: 'La solicitud ha tomado demasiado tiempo, por favor inténtelo de nuevo.'
+            });
+          } else{
+            iziToast.show({
+              titleColor: '#FF0000',
+              title: 'ERROR',
+              class: 'text-danger',
+              position: 'topRight',
+              message: error.message
+            });
+          }
         }
       );
     }else{
