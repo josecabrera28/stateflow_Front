@@ -1,0 +1,13 @@
+STATEFLOW 2.0
+
+NEW FEATURES
+1. Login and register: Timeout and stronger password required
+2. CI/CD
+3. Propiedades-Gastos: Update bills costs
+4. Tenant's features
+5. Bills API to know when a bill has been generated from the company
+6. Administrator features
+7. Responsive
+8. Security
+9. Back ups
+10. Landing page
