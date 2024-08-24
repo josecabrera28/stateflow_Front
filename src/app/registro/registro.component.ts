@@ -35,7 +35,7 @@ export class RegistroComponent {
         contraseña: this.password
       }
       this._auth.registrarUsuario(usuario).pipe(
-        timeout(10000) // 10 segundos de timeout (ajusta según sea necesario)
+        timeout(10000) // 10 sec timeout
       ).subscribe(
         response=>{
           if(response.message){

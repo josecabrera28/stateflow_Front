@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs/operators';
 import iziToast from 'izitoast';
 
 
@@ -31,7 +32,9 @@ export class LoginComponent implements OnInit{
         email: this.user.email,
         contraseña: this.user.password
       }
-      this._auth.login(data).subscribe(
+      this._auth.login(data).pipe(
+        timeout(10000) // 10 sec timeout
+      ).subscribe(
         response=>{
           if(response.message){
             iziToast.show({
