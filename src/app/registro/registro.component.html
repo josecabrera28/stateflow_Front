@@ -24,7 +24,7 @@
             </div>
             <div class="col-12">
                 <div class="input-group has-validation">
-                    <input type="password" #passwordInput="ngModel" name="password" [(ngModel)]="password" class="form-control" id="validationTooltipPassword" aria-describedby="validationTooltipPasswordPrepend" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{10,20}$" placeholder="Contraseña">
+                    <input type="password" #passwordInput="ngModel" name="password" [(ngModel)]="password" class="form-control" id="validationTooltipPassword" aria-describedby="validationTooltipPasswordPrepend" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@\$\!\#%\*\?&])[A-Za-z\d@\$\!\#%\*\?&]{10,20}$" placeholder="Contraseña">
                     <div *ngIf="passwordInput.invalid" style="display: inline;" class="invalid-tooltip">
                         Contraseña debe tener entre 10 y 20 caracteres y debe incluir al menos 1 letra y 1 numero.
                     </div>

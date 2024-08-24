@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
+import { timeout } from 'rxjs/operators';
 import iziToast from 'izitoast';
 
 @Component({
@@ -33,7 +34,9 @@ export class RegistroComponent {
         email: this.email,
         contraseña: this.password
       }
-      this._auth.registrarUsuario(usuario).subscribe(
+      this._auth.registrarUsuario(usuario).pipe(
+        timeout(10000) // 10 segundos de timeout (ajusta según sea necesario)
+      ).subscribe(
         response=>{
           if(response.message){
             iziToast.show({
@@ -63,16 +66,42 @@ export class RegistroComponent {
             this._router.navigate(['login']);
           }
         },error=>{
-          iziToast.show({
-            titleColor: '#FF0000',
-            title: 'ERROR',
-            class: 'text-danger',
-            position: 'topRight',
-            message: error.error.message
-          });
+          if (error.name === 'TimeoutError') {
+            iziToast.show({
+              titleColor: '#FF0000',
+              title: 'ERROR',
+              class: 'text-danger',
+              position: 'topRight',
+              message: 'La solicitud ha tomado demasiado tiempo, por favor inténtelo de nuevo.'
+            });
+          }else if(error.error.errors && Array.isArray(error.error.errors)){
+            error.error.errors.forEach((err: any) => {
+              iziToast.show({
+                titleColor: 'black',
+                backgroundColor: '#FF0000',
+                color: 'red',
+                title: 'Error',
+                position: 'topRight',
+                message: err.msg, 
+                theme: 'light',
+                iconColor: 'white',
+                layout: 1,
+              });
+            });  
+          }else{
+            iziToast.show({
+              titleColor: '#FF0000',
+              title: 'ERROR',
+              class: 'text-danger',
+              position: 'topRight',
+              message: error.error.message
+            });
+          }
         }
       );
     }else{
+      console.log(this.password);
+      console.log(this.email);
       iziToast.show({
         titleColor: '#FF0000',
         title: 'ERROR',
