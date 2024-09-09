@@ -15,6 +15,7 @@ import { DisplayPropertiesComponent } from './components/display-properties/disp
 import { ReportesComponent } from './reportes/reportes.component';
 import { ContratosComponent } from './contratos/contratos.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { NavComponent } from './components/nav/nav.component';
 
 export function tokenGetter() {
   return sessionStorage.getItem("token");
@@ -32,6 +33,7 @@ export function tokenGetter() {
     ReportesComponent,
     ContratosComponent,
     LandingComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
