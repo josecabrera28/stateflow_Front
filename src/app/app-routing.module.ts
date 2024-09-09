@@ -6,8 +6,12 @@ import { propietariosGuard } from "../app/guards/propietarios.guard";
 import { RegistroComponent } from './registro/registro.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { ContratosComponent } from './contratos/contratos.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 const routes: Routes = [{
+  path: 'landing',
+  component: LandingComponent
+},{
   path: 'home',
   component: HomeComponent,
   canActivate: [propietariosGuard]
