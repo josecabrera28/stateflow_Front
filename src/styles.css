@@ -2,9 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body{
-    background-image: url('./assets/logo-transparent-png.png');
+    background-color: #91e9ab;
     background-repeat: no-repeat;
     background-position: 50% 5%;
     background-size:contain;
     z-index: 1;
+}
+
+.titles {
+    font-family: "Macondo Swash Caps", cursive !important;
+    font-weight: 400;
+    font-style: normal; 
+}
+
+.subtitle-text {
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
